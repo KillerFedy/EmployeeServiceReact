@@ -1,17 +1,32 @@
-import React from 'react';
+import React from "react";
 
 const Department = ({ department }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div>
-      <h2>{department.departmentName}</h2>
-      <ul>
-        {department.employees.map(employee => (
-          <li key={employee.id}>{employee.name} - {employee.position}</li>
+      <div onClick={handleToggle}>
+        {department.id} {department.departmentName}
+        {department.childDepartments.length > 0 && (
+          <span>{isOpen ? " -" : " +"}</span>
+        )}
+      </div>
+
+      {isOpen &&
+        department.childDepartments.map((childDepartment) => (
+          <Department key={childDepartment.id} department={childDepartment} />
         ))}
-      </ul>
-      {department.childDepartments.map(childDepartment => (
-        <Department key={childDepartment.id} department={childDepartment} />
-      ))}
+
+      {isOpen &&
+        department.employees.map((employee) => (
+          <div key={employee.id}>
+            {employee.name} - {employee.position} (id - {employee.id})
+          </div>
+        ))}
     </div>
   );
 };
