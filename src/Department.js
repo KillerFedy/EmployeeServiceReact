@@ -18,12 +18,14 @@ const Department = ({ department }) => {
 
       {isOpen &&
         department.childDepartments.map((childDepartment) => (
-          <Department key={childDepartment.id} department={childDepartment} />
+          <div key={childDepartment.id} style={{ paddingLeft: "20px" }}>
+            <Department department={childDepartment} />
+          </div>
         ))}
 
       {isOpen &&
         department.employees.map((employee) => (
-          <div key={employee.id}>
+          <div key={employee.id} style={{ paddingLeft: "20px" }}>
             {employee.name} - {employee.position} (id - {employee.id})
           </div>
         ))}
